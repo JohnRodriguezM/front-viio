@@ -20,14 +20,13 @@ export const SignUp = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log(formSignUp);
-
+    if (!formSignUp.email || !formSignUp.password) {
+      toast.error("Please fill all the fields");
+      return;
+    }
     createUser(formSignUp).then((response) => {
       if (response.status === 200) navigate("/home");
       toast.success("User created and logged in");
-      // eslint-disable-next-line no-console
-      console.log("User created");
     });
   };
 

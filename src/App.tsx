@@ -1,9 +1,10 @@
 import { SearchResults } from "./components/pruebas/SearchResults";
-import { Component1 } from "./components/pruebas/Component1";
+// import { Component1 } from "./components/pruebas/Component1";
 import { SignIn } from "./components/signIn/Login";
 import { ProductDetail } from "./components/pruebas/ProductDetail";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { SignUp } from "./components/signUp/SignUp";
+import { Home } from "./components/home/Home";
 
 const ProtectedComponent = ({
   component: Component,
@@ -22,7 +23,7 @@ export const App = (): JSX.Element => {
 
       <Route
         path="/home"
-        element={<ProtectedComponent component={Component1} />}
+        element={<ProtectedComponent component={Home} />}
       />
       <Route
         path="/searchresults"

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../services/login/login.service";
+import { toast } from "sonner";
 
 export const SignIn = (): JSX.Element => {
   //* navigate de react router dom
@@ -22,6 +23,13 @@ export const SignIn = (): JSX.Element => {
     event.preventDefault();
     // eslint-disable-next-line no-console
     console.log(formLogin);
+
+
+    if (!formLogin.email || !formLogin.password) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+
 
     login(formLogin).then(()=> {
       // eslint-disable-next-line no-console

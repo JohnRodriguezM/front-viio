@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PersonIcon from "@mui/icons-material/Person";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+// import NotificationsIcon from "@mui/icons-material/Notifications";
 
 // ! ESTE COMPONENTE VENDRIA A SER EL HOME DE LA APLICACION
 export const Component1 = () => {
@@ -15,9 +15,9 @@ export const Component1 = () => {
           <div className="text-center text-black text-lg font-semibold font-['Inter'] leading-7">
             MAYNOOTH
           </div>
-          <>
+          {/*<>
             <NotificationsIcon />
-          </>
+          </>*/}
         </div>
 
         {/*segunda parte*/}
