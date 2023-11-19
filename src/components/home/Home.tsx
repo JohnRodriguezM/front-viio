@@ -1,13 +1,30 @@
 import { useEffect, useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { getAllProducts } from "../../services/products/getProducts.service";
-import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
+import { RingLoader } from "react-spinners";
+// import  ArrowBackIcon  from '@mui/icons-material/ArrowBack';
 
 export const Home: React.FC = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    lazyLoad: true,
+    autoplay: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    pauseOnHover: true,
+  };
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10;
 
   useEffect(() => {
     getAllProducts().then((products) => {
@@ -17,72 +34,97 @@ export const Home: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // Replace this with your loading indicator
+    return (
+      <>
+        <div
+          className="flex justify-center items-center"
+          style={{ height: "100vh" }}
+        >
+          <RingLoader color="#36d7b7" />
+        </div>
+      </>
+    );
   }
 
-  const paginatedProducts = products.slice(
-    currentPage * itemsPerPage,
-    (currentPage + 1) * itemsPerPage
-  );
-
-  const nextPage = () => {
-    setCurrentPage((prevPage) =>
-      Math.min(prevPage + 1, Math.ceil(products.length / itemsPerPage) - 1)
-    );
-  };
-
-  const prevPage = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
-  };
-
   return (
-    <div className="w-[360px] h-auto px-6 py-1 flex-col justify-start items-start inline-flex">
-      <div className="self-stretch h-[200px] flex-col justify-start items-center flex">
-        <br /> <br /> <br />
-        <Link
-          className="bg-black text-white rounded-lg px-4 py-2"
-          to="/searchresults"
-        >
-          Buscar producto
-        </Link>
-        <div className="self-stretch grow shrink basis-0 justify-center items-center gap-4 inline-flex">
-          {paginatedProducts.map((product) => (
-            <div key={product.id}>
-              <img
-                className="h-[200px] w-[200px] object-contain"
-                src={product.thumbnail}
-                alt={product.title}
-              />
-              <p className="legend">{product.title}</p>
-            </div>
-          ))}
-          <div className="absolute bottom-0 flex space-x-2">
-            <button
-              className="bg-black text-white rounded-lg px-4 py-2"
-              onClick={prevPage}
+    <div className="container text-center flex justify-center mt-40">
+      <Swiper
+        {...settings}
+        effect={"coverflow"}
+        grabCursor={true}
+        centeredSlides={true}
+        loop={true}
+        slidesPerView={"auto"}
+        coverflowEffect={{
+          rotate: 0,
+          stretch: 0,
+          depth: 100,
+          modifier: 2.5,
+        }}
+        pagination={{ el: ".swiper-pagination", clickable: true }}
+        navigation={{
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        }}
+        modules={[EffectCoverflow, Pagination, Navigation]}
+        className="swiper_container"
+      >
+        {products.map((item) => (
+          <SwiperSlide
+            key={item.id}
+            className="swiper-slide"
+            style={{
+              width: "500px",
+              height: "600px",
+              textAlign: "center",
+              marginTop: "1rem",
+            }}
+          >
+            <img
+              src={item.thumbnail}
+              alt={item.title}
+              style={{ width: "500px", height: "500px" }}
+              className="justify-center"
+            />
+
+            <div
+              className="
+              grid-cols-2
+            "
             >
-              Previous
-            </button>
-            {Array(Math.ceil(products.length / itemsPerPage))
-              .fill(0)
-              .map((_, index) => (
+              <div>
+                <h2 className="swiper-slide__title">{item.title}</h2>
+                <p className="swiper-slide__price">{item.price}</p>
+              </div>
+              <div>
                 <button
-                  className={`w-3 h-3 rounded-full border-2 border-black cursor-pointer ${
-                    index === currentPage ? "bg-black" : "bg-white"
-                  }`}
-                  key={index}
-                  onClick={() => setCurrentPage(index)}
-                />
-              ))}
-            <button
-              className="bg-black text-white rounded-lg px-4 py-2"
-              onClick={nextPage}
-            >
-              Next
-            </button>
-          </div>
+                  className="
+                  bg-blue-500
+                  hover:bg-blue-700
+                  text-white
+                  font-bold
+                  py-2
+                  px-4
+                  rounded-full
+                  w-40
+                  text-center
+                  mt-4
+                "
+                  onClick={() => {
+                    console.log("clicked");
+                  }}
+                >
+                  Details
+                </button>
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
+        <div className="slider-controler mt-16">
+          <div className="swiper-button-prev slider-arrow w-20 h-20 rounded-full bg-white shadow flex items-center justify-center text-blue-500"></div>
+          <div className="swiper-button-next slider-arrow w-20 h-20 rounded-full bg-white shadow flex items-center justify-center text-blue-500"></div>
         </div>
-      </div>
+      </Swiper>
     </div>
   );
 };

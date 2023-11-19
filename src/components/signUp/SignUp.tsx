@@ -3,14 +3,24 @@ import { useState } from "react";
 import { createUser } from "../../services/signUp/signUp.service";
 import { toast } from "sonner";
 
-export const SignUp = () => {
-  //* navigate de react router dom
+/**
+ * Sign Up component.
+ * This component allows users to sign up by providing their email and password.
+ * It includes form validation and navigation using react-router-dom.
+ */
+export const SignUp = (): JSX.Element => {
+  // navigate de react router dom
   const navigate = useNavigate();
   const [formSignUp, setFormSignUp] = useState({
     email: "",
     password: "",
   });
 
+  /**
+   * Handles input change event.
+   * Updates the formSignUp state with the new input value.
+   * @param event - The input change event.
+   */
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormSignUp({
       ...formSignUp,
@@ -18,6 +28,12 @@ export const SignUp = () => {
     });
   };
 
+  /**
+   * Handles form submission event.
+   * Validates the form and creates a new user.
+   * If successful, navigates to the home page.
+   * @param event - The form submission event.
+   */
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!formSignUp.email || !formSignUp.password) {

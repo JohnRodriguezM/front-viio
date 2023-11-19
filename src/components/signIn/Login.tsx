@@ -3,8 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../services/login/login.service";
 import { toast } from "sonner";
 
+/**
+ * Renders a sign-in form.
+ * @returns The sign-in form component.
+ */
 export const SignIn = (): JSX.Element => {
-  //* navigate de react router dom
+  // navigate de react router dom
   const navigate = useNavigate();
 
   const [formLogin, setFormLogin] = useState({
@@ -12,6 +16,10 @@ export const SignIn = (): JSX.Element => {
     password: "",
   });
 
+  /**
+   * Handles input change event.
+   * @param event - The input change event.
+   */
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormLogin({
       ...formLogin,
@@ -19,27 +27,30 @@ export const SignIn = (): JSX.Element => {
     });
   };
 
+  /**
+   * Handles form submit event.
+   * @param event - The form submit event.
+   */
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log(formLogin);
-
-
     if (!formLogin.email || !formLogin.password) {
       toast.error("Please fill all the fields");
       return;
     }
 
-
-    login(formLogin).then(()=> {
-      // eslint-disable-next-line no-console
-      navigate("/home");
-    });
+    login(formLogin)
+      .then(() => {
+        navigate("/home");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+        navigate("/");
+      });
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="w-[360px] h-[800px] px-6 bg-white flex flex-col justify-center items-center gap-6">
+      <div className="w-[360px] h-[800px] px-6 bg-white flex flex-col justify-center items-center gap-6 mt-32">
         <div className="w-[360px] h-14 p-4 flex flex-col justify-start items-start">
           <div className="w-6 h-6 relative" />
           <h1 className="text-center text-black text-base font-semibold font-['Inter'] leading-normal">
@@ -73,12 +84,30 @@ export const SignIn = (): JSX.Element => {
             />
           </label>
         </div>
+
         <button
           type="submit"
-          className="self-stretch px-4 py-2 bg-black rounded-lg flex justify-center items-center gap-2"
+          className="self-stretch px-4 py-2 bg-black rounded-lg flex justify-center items-center gap-1"
         >
           <span className="text-center text-white text-base font-medium font-['Inter'] leading-normal">
             Log in
+          </span>
+        </button>
+        <span
+          className="text-center text-black text-sm font-normal font-['Inter'] leading-tight"
+          style={{ color: "#BDBDBD" }}
+        >
+          Or
+        </span>
+        <button
+          type="button"
+          onClick={() => {
+            console.log("Google");
+          }}
+          className="self-stretch px-4 py-2 bg-red-600 rounded-lg flex justify-center items-center gap-1 mt-4"
+        >
+          <span className="text-center text-white text-base font-medium font-['Inter'] leading-normal">
+            Continue with Google
           </span>
         </button>
         <Link to="/signup">
