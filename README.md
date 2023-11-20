@@ -39,7 +39,7 @@ Si quieres contribuir, sigue estos pasos:
 En el directorio del proyecto, puedes ejecutar:
 
 - `npm run dev`: Inicia la aplicación en modo desarrollo.
-- `npm test`: Ejecuta las pruebas en modo interactivo.
+- `npm run test`: Ejecuta las pruebas en modo interactivo.
 - `npm run build`: Construye la aplicación para producción.
 
 
