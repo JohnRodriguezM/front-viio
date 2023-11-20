@@ -1,27 +1,45 @@
-# React + TypeScript + Vite
+# Nombre del Proyecto
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Front-viio
 
-Currently, two official plugins are available:
+## Instalación
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Asegúrate de tener Node.js y npm instalados en tu máquina.
 
-## Expanding the ESLint configuration
+1. Clona este repositorio
+2. Navega al directorio del proyecto: `cd tu-proyecto`
+3. Instala las dependencias: `npm install`
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Uso
 
-- Configure the top-level `parserOptions` property like this:
+1. Inicia la aplicación: `npm run dev`
+2. Abre tu navegador y visita `http://localhost:5173`
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## Estructura de Carpetas
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- `/public`: Archivos estáticos y el punto de entrada HTML.
+- `/src`: Código fuente de la aplicación.
+  - `/components`: Componentes de React.
+  - `/context`
+  - `/toolkit
+  - `/utils`
+
+## Contribuir
+
+Si quieres contribuir, sigue estos pasos:
+
+1. Crea un fork del proyecto.
+2. Crea una nueva rama: `git checkout -b nueva-funcionalidad`
+3. Haz tus cambios y haz commit: `git commit -m 'Añade nueva funcionalidad'`
+4. Empuja tus cambios a tu fork: `git push origin nueva-funcionalidad`
+5. Crea un pull request en GitHub.
+
+## Scripts Disponibles
+
+En el directorio del proyecto, puedes ejecutar:
+
+- `npm run dev`: Inicia la aplicación en modo desarrollo.
+- `npm test`: Ejecuta las pruebas en modo interactivo.
+- `npm run build`: Construye la aplicación para producción.
+
+
