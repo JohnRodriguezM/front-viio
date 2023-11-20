@@ -15,7 +15,7 @@ export const SignIn = (): JSX.Element => {
   // ? context declaration
   const { loading, handleLoading } = useContext(LoadingContext);
 
-  const [formLogin, setFormLogin] = useState({
+  const [formLogin, setFormLogin] = useState<Record<string, string | number>>({
     email: "",
     password: "",
   });
@@ -31,25 +31,27 @@ export const SignIn = (): JSX.Element => {
     });
   };
 
+  const HOME_PATH = "/home";
+  const ROOT_PATH = "/";
+  const EMPTY_FIELDS_ERROR = "Please fill all the fields";
   /**
-   * Handles form submit event.
-   * @param event - The form submit event.
+   * Handles the form submission for the login component.
+   * @param event - The form submission event.
    */
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!formLogin.email || !formLogin.password) {
-      toast.error("Please fill all the fields");
+      toast.error(EMPTY_FIELDS_ERROR);
       return;
     }
 
-    login(formLogin, handleLoading)
-      .then(() => {
-        navigate("/home");
-      })
-      .catch((error) => {
-        toast.error(error.message);
-        navigate("/");
-      });
+    try {
+      await login(formLogin, handleLoading);
+      navigate(HOME_PATH);
+    } catch (error) {
+      toast.error(error.message);
+      navigate(ROOT_PATH);
+    }
   };
 
   return (

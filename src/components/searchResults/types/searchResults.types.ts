@@ -14,6 +14,6 @@ export interface Product {
   thumbnail: string;
 }
 
-export interface initialState {
+export interface initialStateViio {
   product: Product;
 }

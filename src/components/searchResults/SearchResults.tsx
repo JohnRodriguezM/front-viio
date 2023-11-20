@@ -15,12 +15,17 @@ import { RingLoader } from "react-spinners";
 import { StateSearch } from "./types/searchResults.types";
 
 export const SearchResults: React.FC = (): JSX.Element => {
-  //* state declaration
+  /**
+   * Represents the state of the search component.
+   */
   const [stateSearch, setStateSearch] = useState<StateSearch>({
     search: "",
     filteredProducts: [],
   });
 
+  /**
+   * The current page number in the search results.
+   */
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 4;
 
@@ -57,19 +62,20 @@ export const SearchResults: React.FC = (): JSX.Element => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStateSearch({
-      ...stateSearch,
-      [event.target.name]: event.target.value,
-    });
+    const { name, value } = event.target;
+    setStateSearch((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   return (
     <>
       <form
         onSubmit={handleSubmit}
-        className="w-full h-full flex justify-center items-center gap-4"
+        className="w-full h-full flex justify-center items-center gap-4 mt-28"
       >
-        <div className="w-[360px] h-[800px] px-6 bg-white flex-col justify-start items-center gap-4 inline-flex mt-24">
+        <div className="w-[360px] h-[800px] px-6 bg-white flex-col justify-start items-center gap-4 inline-flex ">
           <div className="h-[92px] pl-4 pr-6 pt-3 border-b border-black border-opacity-20 flex-col justify-center items-start gap-1 flex">
             <div className="justify-start items-center gap-4 inline-flex">
               <Link to="/home">
@@ -118,12 +124,10 @@ export const SearchResults: React.FC = (): JSX.Element => {
                   {currentProducts.map((product, index) => (
                     <Link
                       to={`/product/${product.id}`}
+                      key={Math.random() * index + 1}
                       className="flex-col justify-start items-start gap-6 flex"
                     >
-                      <div
-                        key={Math.random() * index + 1}
-                        className="flex-col justify-start items-start gap-6 flex"
-                      >
+                      <div className="flex-col justify-start items-start gap-6 flex">
                         <div className="w-[312px] justify-start items-start gap-6 inline-flex">
                           <div className="w-36 flex-col justify-start items-start gap-1 inline-flex">
                             <div className="w-36 h-36 relative bg-white rounded-lg border-2 border-black">

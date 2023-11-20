@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { initialState } from "../../components/searchResults/types/searchResults.types";
+import { initialStateViio } from "../../components/searchResults/types/searchResults.types";
 
-const initialState: initialState = {
+/**
+ * Initial state for the viio slice.
+ */
+const initialState: initialStateViio = {
   product: {
     id: 0,
     title: "",
@@ -14,12 +17,20 @@ const initialState: initialState = {
   },
 };
 
+/**
+ * Viio slice.
+ */
 export const viioSlice = createSlice({
   name: "viio",
   initialState,
   reducers: {
+    /**
+     * Set the user.
+     * @param state - The current state.
+     * @param action - The action containing the payload.
+     */
     setUser: (state, action) => {
-      state.value = action.payload;
+      state.product = action.payload;
     },
   },
 });
