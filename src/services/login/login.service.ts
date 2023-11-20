@@ -2,8 +2,19 @@ import { toast } from "sonner";
 import { api } from "../../axios/axios";
 import { AxiosError } from "axios";
 
-export const login = async (bodyPost: unknown) => {
+/**
+ * Performs a login request to the server.
+ *
+ * @param bodyPost - The request body containing the login credentials.
+ * @param handleLoading - A function to handle the loading state during the login process.
+ * @returns A Promise that resolves to the response data if the login is successful.
+ */
+export const login = async (
+  bodyPost: unknown,
+  handleLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   try {
+    handleLoading(true);
     const response = await api.post("/login", bodyPost);
 
     if (response.status === 200) {
@@ -14,10 +25,10 @@ export const login = async (bodyPost: unknown) => {
     }
   } catch (error) {
     const axiosError = error as AxiosError;
-
-    if (axiosError.response) {
-      const data = axiosError.response.data as { message: string };
-      toast.error(data.message);
+    if (axiosError.message === "Network Error") {
+      toast.error("Error al conectarse con el servidor");
     }
+  } finally {
+    handleLoading(false);
   }
 };

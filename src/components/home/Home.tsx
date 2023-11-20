@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { getAllProducts } from "../../services/products/getProducts.service";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,27 +9,23 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 import { RingLoader } from "react-spinners";
+import { Link } from "react-router-dom";
+import { seting } from "../../utils/constants/settings";
+import { LoadingContext } from "../../context/LoadingContext";
 // import  ArrowBackIcon  from '@mui/icons-material/ArrowBack';
 
 export const Home: React.FC = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    lazyLoad: true,
-    autoplay: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    pauseOnHover: true,
-  };
+
+  // ? context declaration
+  const { loading, handleLoading } = useContext(LoadingContext);
+
 
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
-    getAllProducts().then((products) => {
+    getAllProducts(handleLoading).then((products) => {
       setProducts(products);
-      setLoading(false);
     });
   }, []);
 
@@ -49,7 +45,7 @@ export const Home: React.FC = () => {
   return (
     <div className="container text-center flex justify-center mt-40">
       <Swiper
-        {...settings}
+        {...seting}
         effect={"coverflow"}
         grabCursor={true}
         centeredSlides={true}
@@ -69,9 +65,9 @@ export const Home: React.FC = () => {
         modules={[EffectCoverflow, Pagination, Navigation]}
         className="swiper_container"
       >
-        {products.map((item) => (
+        {products.map((item, index) => (
           <SwiperSlide
-            key={item.id}
+            key={Math.random() * index + 1}
             className="swiper-slide"
             style={{
               width: "500px",
@@ -97,8 +93,12 @@ export const Home: React.FC = () => {
                 <p className="swiper-slide__price">{item.price}</p>
               </div>
               <div>
-                <button
-                  className="
+                <Link
+                  to={`/product/${item.id}`}
+                  className="swiper-slide__button"
+                >
+                  <button
+                    className="
                   bg-blue-500
                   hover:bg-blue-700
                   text-white
@@ -110,12 +110,13 @@ export const Home: React.FC = () => {
                   text-center
                   mt-4
                 "
-                  onClick={() => {
-                    console.log("clicked");
-                  }}
-                >
-                  Details
-                </button>
+                    onClick={() => {
+                      console.log(item);
+                    }}
+                  >
+                    Details
+                  </button>
+                </Link>
               </div>
             </div>
           </SwiperSlide>

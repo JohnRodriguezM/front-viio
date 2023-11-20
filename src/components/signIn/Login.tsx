@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../services/login/login.service";
 import { toast } from "sonner";
+import { LoadingContext } from "../../context/LoadingContext";
+import { RingLoader } from "react-spinners";
 
 /**
  * Renders a sign-in form.
  * @returns The sign-in form component.
  */
 export const SignIn = (): JSX.Element => {
-  // navigate de react router dom
+  // ? navigate de react router dom
   const navigate = useNavigate();
+  // ? context declaration
+  const { loading, handleLoading } = useContext(LoadingContext);
 
   const [formLogin, setFormLogin] = useState({
     email: "",
@@ -38,7 +42,7 @@ export const SignIn = (): JSX.Element => {
       return;
     }
 
-    login(formLogin)
+    login(formLogin, handleLoading)
       .then(() => {
         navigate("/home");
       })
@@ -85,31 +89,25 @@ export const SignIn = (): JSX.Element => {
           </label>
         </div>
 
-        <button
-          type="submit"
-          className="self-stretch px-4 py-2 bg-black rounded-lg flex justify-center items-center gap-1"
-        >
-          <span className="text-center text-white text-base font-medium font-['Inter'] leading-normal">
-            Log in
-          </span>
-        </button>
+        {loading ? (
+          <RingLoader color="#36d7b7" />
+        ) : (
+          <button
+            type="submit"
+            className="self-stretch px-4 py-2 bg-black rounded-lg flex justify-center items-center gap-1"
+          >
+            <span className="text-center text-base text-white font-medium font-['Inter'] leading-normal">
+              Log in
+            </span>
+          </button>
+        )}
+
         <span
           className="text-center text-black text-sm font-normal font-['Inter'] leading-tight"
           style={{ color: "#BDBDBD" }}
         >
           Or
         </span>
-        <button
-          type="button"
-          onClick={() => {
-            console.log("Google");
-          }}
-          className="self-stretch px-4 py-2 bg-red-600 rounded-lg flex justify-center items-center gap-1 mt-4"
-        >
-          <span className="text-center text-white text-base font-medium font-['Inter'] leading-normal">
-            Continue with Google
-          </span>
-        </button>
         <Link to="/signup">
           <div className="flex justify-center items-start gap-2">
             <span className="text-center text-black text-sm font-normal font-['Inter'] leading-tight">

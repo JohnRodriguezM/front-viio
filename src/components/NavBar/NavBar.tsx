@@ -4,17 +4,58 @@ import { logoutDeleteToken } from "../../utils/functions/logout";
 import swal from "sweetalert";
 
 const NavBar = (): JSX.Element => {
+  /**
+   * Function to navigate to a different route.
+   */
   const navigate = useNavigate();
 
+  /**
+   * Represents the state of the NavBar component.
+   * @type {boolean}
+   */
   const [isOpen, setIsOpen] = useState(false);
 
+  /**
+   * Toggles the menu state.
+   */
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  /**
+   * Handles the logout functionality.
+   * Displays a confirmation dialog and performs the logout if confirmed.
+   * Navigates to the home page after logout.
+   */
+  const handleLogout = () => {
+    swal({
+      title: "Are you sure?",
+      text: "Once logged out, you will not be able to log in again!",
+      icon: "warning",
+      buttons: ["Cancel", "Logout"],
+      dangerMode: true,
+    }).then((willLogout) => {
+      if (willLogout) {
+        logoutDeleteToken();
+        navigate("/");
+        swal("You have been logged out!", {
+          icon: "success",
+        });
+      } else {
+        swal("You are still logged in!", {
+          icon: "info",
+        });
+      }
+    });
+  };
+
+  /**
+   * Array of links for the navigation bar.
+   * Each link object contains a name and a path.
+   */
   const links = [
     { name: "Home", path: "/home" },
-    { name: "Search", path: "/search/:id" },
+    { name: "Search", path: "/search" },
   ];
   return (
     <nav className="flex items-center justify-between flex-wrap bg-blue-500 p-6 w-full mt-0 fixed z-10 top-0">
@@ -61,27 +102,7 @@ const NavBar = (): JSX.Element => {
         >
           <button
             type="button"
-            onClick={() => {
-              swal({
-                title: "Are you sure?",
-                text: "Once logged out, you will not be able to log in again!",
-                icon: "warning",
-                buttons: ["Cancel", "Logout"],
-                dangerMode: true,
-              }).then((willLogout) => {
-                if (willLogout) {
-                  logoutDeleteToken();
-                  navigate("/");
-                  swal("You have been logged out!", {
-                    icon: "success",
-                  });
-                } else {
-                  swal("You are still logged in!", {
-                    icon: "info",
-                  });
-                }
-              });
-            }}
+            onClick={handleLogout}
             className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-500 hover:bg-white mt-4 lg:mt-0"
           >
             Logout

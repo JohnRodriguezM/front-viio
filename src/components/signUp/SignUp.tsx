@@ -1,7 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import { createUser } from "../../services/signUp/signUp.service";
 import { toast } from "sonner";
+import { LoadingContext } from "../../context/LoadingContext";
+import { RingLoader } from "react-spinners";
 
 /**
  * Sign Up component.
@@ -9,8 +11,9 @@ import { toast } from "sonner";
  * It includes form validation and navigation using react-router-dom.
  */
 export const SignUp = (): JSX.Element => {
-  // navigate de react router dom
-  const navigate = useNavigate();
+  // ? context declaration
+  const { loading, handleLoading } = useContext(LoadingContext);
+
   const [formSignUp, setFormSignUp] = useState({
     email: "",
     password: "",
@@ -40,9 +43,10 @@ export const SignUp = (): JSX.Element => {
       toast.error("Please fill all the fields");
       return;
     }
-    createUser(formSignUp).then((response) => {
-      if (response.status === 200) navigate("/home");
-      toast.success("User created and logged in");
+    createUser(formSignUp, handleLoading).then((response) => {
+      if (response.status === 200) {
+        toast.success("User created");
+      }
     });
   };
 
@@ -82,11 +86,20 @@ export const SignUp = (): JSX.Element => {
             />
           </label>
         </div>
-        <button className="self-stretch px-4 py-2 bg-black rounded-lg flex justify-center items-center gap-2">
-          <span className="text-center text-white text-base font-medium font-['Inter'] leading-normal">
-            Sign up
-          </span>
-        </button>
+
+        {loading ? (
+          <RingLoader color="#36d7b7" />
+        ) : (
+          <button
+            type="submit"
+            className="self-stretch px-4 py-2 bg-black rounded-lg flex justify-center items-center gap-1"
+          >
+            <span className="text-center text-base text-white font-medium font-['Inter'] leading-normal">
+              Sign Up
+            </span>
+          </button>
+        )}
+
         <Link to="/">
           <div className="flex justify-center items-start gap-2">
             <span className="text-center text-black text-sm font-normal font-['Inter'] leading-tight">
