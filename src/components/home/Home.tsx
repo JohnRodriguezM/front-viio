@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { getAllProducts } from "../../services/products/getProducts.service";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useDispatch } from "react-redux";
 
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -12,16 +13,16 @@ import { RingLoader } from "react-spinners";
 import { Link } from "react-router-dom";
 import { seting } from "../../utils/constants/settings";
 import { LoadingContext } from "../../context/LoadingContext";
-// import  ArrowBackIcon  from '@mui/icons-material/ArrowBack';
+import { setUser } from "../../toolkit/slice/viio-slice";
 
 export const Home: React.FC = () => {
+  // ? dispatch declaration
+  const dispatch = useDispatch();
 
   // ? context declaration
   const { loading, handleLoading } = useContext(LoadingContext);
 
-
   const [products, setProducts] = useState([]);
-
 
   useEffect(() => {
     getAllProducts(handleLoading).then((products) => {
@@ -111,7 +112,7 @@ export const Home: React.FC = () => {
                   mt-4
                 "
                     onClick={() => {
-                      console.log(item);
+                      dispatch(setUser(item));
                     }}
                   >
                     Details
