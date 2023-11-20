@@ -13,8 +13,12 @@ import { LoadingContext } from "../../context/LoadingContext";
 import { toast } from "sonner";
 import { RingLoader } from "react-spinners";
 import { StateSearch } from "./types/searchResults.types";
+import { setUser } from "../../toolkit/slice/viio-slice";
+import { useDispatch } from "react-redux";
 
 export const SearchResults: React.FC = (): JSX.Element => {
+  //* dispatch declaration
+  const dispatch = useDispatch();
   /**
    * Represents the state of the search component.
    */
@@ -126,6 +130,9 @@ export const SearchResults: React.FC = (): JSX.Element => {
                       to={`/product/${product.id}`}
                       key={Math.random() * index + 1}
                       className="flex-col justify-start items-start gap-6 flex"
+                      onClick={() => {
+                        dispatch(setUser(product));
+                      }}
                     >
                       <div className="flex-col justify-start items-start gap-6 flex">
                         <div className="w-[312px] justify-start items-start gap-6 inline-flex">
