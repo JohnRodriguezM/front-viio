@@ -15,10 +15,15 @@ import { seting } from "../../utils/constants/settings";
 import { LoadingContext } from "../../context/LoadingContext";
 import { setUser } from "../../toolkit/slice/viio-slice";
 
-export const Home: React.FC = () => {
+export const Home: React.FC = (): JSX.Element => {
   // ? dispatch declaration
   const dispatch = useDispatch();
 
+  /**
+   * Represents the Home component.
+   * @remarks
+   * This component is responsible for rendering the home page.
+  */
   // ? context declaration
   const { loading, handleLoading } = useContext(LoadingContext);
 
@@ -28,7 +33,7 @@ export const Home: React.FC = () => {
     getAllProducts(handleLoading).then((products) => {
       setProducts(products);
     });
-  }, []);
+  }, [handleLoading]);
 
   if (loading) {
     return (

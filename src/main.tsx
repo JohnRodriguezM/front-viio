@@ -1,3 +1,7 @@
+/**
+ * Entry point of the application.
+ * Renders the root component and sets up the necessary providers and components.
+ */
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App.tsx";

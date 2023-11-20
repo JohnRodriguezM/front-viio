@@ -14,10 +14,16 @@ export const SignUp = (): JSX.Element => {
   // ? context declaration
   const { loading, handleLoading } = useContext(LoadingContext);
 
-  const [formSignUp, setFormSignUp] = useState({
-    email: "",
-    password: "",
-  });
+  /**
+   * Represents the SignUp component.
+   * @component
+   */
+  const [formSignUp, setFormSignUp] = useState<Record<string, string | number>>(
+    {
+      email: "",
+      password: "",
+    }
+  );
 
   /**
    * Handles input change event.
@@ -37,17 +43,24 @@ export const SignUp = (): JSX.Element => {
    * If successful, navigates to the home page.
    * @param event - The form submission event.
    */
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!formSignUp.email || !formSignUp.password) {
+    const { email, password } = formSignUp;
+    if (!email || !password) {
       toast.error("Please fill all the fields");
       return;
     }
-    createUser(formSignUp, handleLoading).then((response) => {
+    try {
+      const response = await createUser(formSignUp, handleLoading);
+
       if (response.status === 200) {
         toast.success("User created");
+      } else {
+        toast.error("Failed to create user");
       }
-    });
+    } catch (error) {
+      toast.error(`An error occurred: ${error.message}`);
+    }
   };
 
   return (

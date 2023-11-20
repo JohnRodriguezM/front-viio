@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { logoutDeleteToken } from "../../utils/functions/logout";
 import swal from "sweetalert";
+import { links } from "../../utils/constants/links";
 
-const NavBar = (): JSX.Element => {
+const NavBar: React.FC = (): JSX.Element => {
   /**
    * Function to navigate to a different route.
    */
@@ -13,21 +14,19 @@ const NavBar = (): JSX.Element => {
    * Represents the state of the NavBar component.
    * @type {boolean}
    */
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   /**
    * Toggles the menu state.
    */
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   /**
    * Handles the logout functionality.
    * Displays a confirmation dialog and performs the logout if confirmed.
    * Navigates to the home page after logout.
    */
-  const handleLogout = () => {
+  const handleLogout = (): void => {
     swal({
       title: "Are you sure?",
       text: "Once logged out, you will not be able to log in again!",
@@ -49,14 +48,6 @@ const NavBar = (): JSX.Element => {
     });
   };
 
-  /**
-   * Array of links for the navigation bar.
-   * Each link object contains a name and a path.
-   */
-  const links = [
-    { name: "Home", path: "/home" },
-    { name: "Search", path: "/search" },
-  ];
   return (
     <nav className="flex items-center justify-between flex-wrap bg-blue-500 p-6 w-full mt-0 fixed z-10 top-0">
       <div className="flex items-center flex-shrink-0 text-white mr-6">

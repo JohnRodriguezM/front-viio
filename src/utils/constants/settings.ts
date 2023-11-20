@@ -1,3 +1,6 @@
+/**
+ * Configuration settings for the slider.
+ */
 export const seting = {
   slidesPerView: 3,
   spaceBetween: 30,

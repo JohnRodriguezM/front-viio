@@ -1,20 +1,21 @@
-//* create a simple slice
-
 import { createSlice } from "@reduxjs/toolkit";
+import { initialState } from "../../components/searchResults/types/searchResults.types";
 
-// Define a type for the slice state
-interface CounterState {
-  value: number;
-}
-
-// Define the initial state using that type
-const initialState: CounterState = {
-  value: 0,
+const initialState: initialState = {
+  product: {
+    id: 0,
+    title: "",
+    price: 0,
+    quantity: 0,
+    total: 0,
+    discountPercentage: 0,
+    discountedPrice: 0,
+    thumbnail: "",
+  },
 };
 
 export const viioSlice = createSlice({
   name: "viio",
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     setUser: (state, action) => {

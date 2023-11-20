@@ -54,7 +54,7 @@ export const SignIn = (): JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="w-[360px] h-[800px] px-6 bg-white flex flex-col justify-center items-center gap-6 mt-32">
+      <div className="w-[360px] h-[800px] px-6 bg-white flex flex-col justify-center items-center gap-6">
         <div className="w-[360px] h-14 p-4 flex flex-col justify-start items-start">
           <div className="w-6 h-6 relative" />
           <h1 className="text-center text-black text-base font-semibold font-['Inter'] leading-normal">

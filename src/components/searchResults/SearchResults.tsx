@@ -12,14 +12,16 @@ import { useContext } from "react";
 import { LoadingContext } from "../../context/LoadingContext";
 import { toast } from "sonner";
 import { RingLoader } from "react-spinners";
+import { StateSearch } from "./types/searchResults.types";
 
-export const SearchResults = (): JSX.Element => {
-  const [stateSearch, setStateSearch] = useState({
+export const SearchResults: React.FC = (): JSX.Element => {
+  //* state declaration
+  const [stateSearch, setStateSearch] = useState<StateSearch>({
     search: "",
     filteredProducts: [],
   });
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 4;
 
   // ? context declaration
@@ -27,7 +29,7 @@ export const SearchResults = (): JSX.Element => {
 
   const { search, filteredProducts } = stateSearch;
 
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const totalPages: number = Math.ceil(filteredProducts.length / itemsPerPage);
   const currentProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
